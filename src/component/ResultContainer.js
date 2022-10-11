@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DummyData from '../asset/dummyData';
 import ImageCard from './ImageCard';
 import ImageModal from './ImageModal';
 import Pagination from './Pagination';
 import EmptyResult from './EmptyResult';
+import getWallPapers from '../api/getWallPapers';
 
 const Container = styled.div`
     max-width: 1830px;
@@ -21,7 +22,15 @@ const ResultsWrapper = styled.div`
 `;
 
 const ResultContainer = () => {
-    const data = DummyData;
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        const fetch = async () => {
+            const data = await getWallPapers();
+            setData(data);
+        };
+        fetch();
+    }, []);
 
     return (
         <Container>
