@@ -46,16 +46,18 @@ const SearchOptionButton = styled.p`
     color: #5e5e5e;
 `;
 
-const Search = ({ setQuery, setOrder, setOrientation }) => {
+const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
     const savedSearchTags = localStorage.getItem('searchTags');
-    const initialSearchTags = savedSearchTags ? JSON.parse(savedSearchTags) : []
+    const initialSearchTags = savedSearchTags
+        ? JSON.parse(savedSearchTags)
+        : [];
     const [searchOption, setSearchOption] = useState(false);
     const [searchTags, setSearchTags] = useState(initialSearchTags);
-    const inputRef = useRef(null)
+    const inputRef = useRef(null);
 
     const updateSearchInput = (value) => {
         inputRef.current.value = value;
-    }
+    };
     const toggleSearchOption = () => {
         setSearchOption((prev) => !prev);
     };
@@ -72,33 +74,47 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
         setQuery(tag);
         updateSearchInput(tag);
         // 2.검색 창 input 값 업데이트
-    }
+    };
     const deleteTag = (idx) => {
         const newSearchTags = [...searchTags];
         newSearchTags.splice(idx, 1);
         setSearchTags(newSearchTags);
-    }
+    };
     useEffect(() => {
-        localStorage.setItem('searchTags', JSON.stringify(searchTags))
-    }, [searchTags])
+        localStorage.setItem('searchTags', JSON.stringify(searchTags));
+    }, [searchTags]);
     return (
         <>
             <SearchBoxContainer>
                 <SearchInputContainer>
                     <SearchIcon width="24" fill="#5e5e5e" />
-                    <SearchInput ref={inputRef} placeholder="검색어 입력 후 ENTER" onKeyDown={onSearch} />
-                    <SearchOptionButton onClick={(e) => toggleSearchOption(e.target.value)}>
+                    <SearchInput
+                        ref={inputRef}
+                        placeholder="검색어 입력 후 ENTER"
+                        onKeyDown={onSearch}
+                    />
+                    <SearchOptionButton
+                        onClick={(e) => toggleSearchOption(e.target.value)}
+                    >
                         검색 옵션 {searchOption ? '닫기' : '열기'}
                     </SearchOptionButton>
                 </SearchInputContainer>
-                {searchOption && <SearchOption
-                    setOrder={setOrder}
-                    setOrientation={setOrientation}
-                />}
+                {searchOption && (
+                    <SearchOption
+                        setOrder={setOrder}
+                        setOrientation={setOrientation}
+                        setPerPage={setPerPage}
+                    />
+                )}
             </SearchBoxContainer>
             <SearchTagContainer>
                 {searchTags.map((tag, idx) => (
-                    <SearchTag key={idx} tag={tag} searchTag={() => searchTag(tag)} deleteTag={() => deleteTag(idx)} />
+                    <SearchTag
+                        key={tag + idx}
+                        tag={tag}
+                        searchTag={() => searchTag(tag)}
+                        deleteTag={() => deleteTag(idx)}
+                    />
                 ))}
             </SearchTagContainer>
         </>
