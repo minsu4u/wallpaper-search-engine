@@ -24,13 +24,13 @@ const SearchOptionLabel = styled.p`
     border-radius: 16px;
 `;
 
-const SearchOption = () => {
+const SearchOption = ({ setOrder, setOrientation }) => {
     return (
         <SearchOptionContainer>
             <SearchOptionUl>
                 <SearchOptionLi>
                     <SearchOptionLabel>정렬</SearchOptionLabel>
-                    <form id="order">
+                    <form id="order" onChange={(e) => setOrder(e.target.value)}>
                         <input
                             type="radio"
                             name="order"
@@ -43,18 +43,20 @@ const SearchOption = () => {
                             name="order"
                             id="popular"
                             value="popular"
+                            defaultChecked={true}
                         />
                         <label htmlFor="popular">인기순</label>
                     </form>
                 </SearchOptionLi>
                 <SearchOptionLi>
                     <SearchOptionLabel>사진 방향</SearchOptionLabel>
-                    <form id="orientation">
+                    <form id="orientation" onChange={(e) => setOrientation(e.target.value)}>
                         <input
                             type="radio"
                             name="orientation"
                             id="all"
                             value="all"
+                            defaultChecked={true}
                         />
                         <label htmlFor="all">모두</label>
                         <input
@@ -88,6 +90,7 @@ const SearchOption = () => {
                             name="per_page"
                             id="20"
                             value={20}
+                            defaultChecked={true}
                         />
                         <label htmlFor="20">20</label>
                         <input
