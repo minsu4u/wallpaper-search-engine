@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import DummyData from '../asset/dummyData';
 import ImageCard from './ImageCard';
-import ImageModal from './ImageModal';
+import React, { useState, Suspense } from 'react';
+// import ImageModal from './ImageModal';
 // import Pagination from './Pagination';
-import { useState } from 'react';
+
+const ImageModal = React.lazy(() => import('./ImageModal'));
 
 const Container = styled.div`
     max-width: 1830px;
@@ -25,12 +26,14 @@ const ResultContainer = ({ data, page, setPage, numOfPages }) => {
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
-            {currentImageDetail && (
-                <ImageModal
-                    currentImageDetail={currentImageDetail}
-                    setCurrentImageDetail={setCurrentImageDetail}
-                />
-            )}
+            <Suspense fallback={<h1>로딩중...</h1>}>
+                {currentImageDetail && (
+                    <ImageModal
+                        currentImageDetail={currentImageDetail}
+                        setCurrentImageDetail={setCurrentImageDetail}
+                    />
+                )}
+            </Suspense>
             {/* {data.hits?.length > 0 && (
                 <Pagination
                     page={page}

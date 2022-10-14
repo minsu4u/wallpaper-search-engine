@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../asset/search.svg';
+import { ReactComponent as SearchIcon } from '../../asset/search.svg';
 import SearchTag from './SearchTag';
 import SearchOption from './SearchOption';
+import debounce from '../../utills/debounce';
 
 const SearchTagContainer = styled.div`
     display: flex;
@@ -92,6 +93,9 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                         ref={inputRef}
                         placeholder="검색어 입력 후 ENTER"
                         onKeyDown={onSearch}
+                        onChange={(e) =>
+                            debounce(() => console.log(e.target.value), 200, e)
+                        }
                     />
                     <SearchOptionButton
                         onClick={(e) => toggleSearchOption(e.target.value)}

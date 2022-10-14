@@ -16,10 +16,10 @@ const Img = styled.img`
 `;
 
 const ImageCard = ({ imgData, onClick }) => {
-    const { webformatURL, id } = imgData;
+    const { previewURL, id } = imgData;
     return (
         <Card onClick={onClick}>
-            <Img key={id} src={webformatURL}></Img>
+            <Img key={id} src={previewURL} width={150} height={100}></Img>
         </Card>
     );
 };

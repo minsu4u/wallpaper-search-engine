@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Search from './Search';
+import Title from './Title';
 
 const Container = styled.div`
     position: relative;
@@ -7,25 +8,8 @@ const Container = styled.div`
     background-color: var(--secondary);
 `;
 
-const HeroTitle = styled.h1`
-    margin: 8px 0px;
-`;
-
-const HeroTitleLink = styled.a`
-    text-decoration: none;
-    color: var(--text);
-    &:hover {
-        color: var(--highlight);
-    }
-`;
-
-const HeroSubtitle = styled.p`
-    margin: 0px;
-    color: var(--highlight);
-    font: 24px;
-`;
-
 const Content = styled.div`
+    background-color: var(--secondary);
     position: relative;
     width: 100%;
     display: flex;
@@ -40,10 +24,6 @@ const Hero = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
     return (
         <Container>
             <Content>
-                <HeroTitle>
-                    <HeroTitleLink href="./">배경화면 검색 엔진</HeroTitleLink>
-                </HeroTitle>
-                <HeroSubtitle>오늘 나의 배경화면은? 👀</HeroSubtitle>
                 <Search
                     setQuery={setQuery}
                     setOrder={setOrder}
