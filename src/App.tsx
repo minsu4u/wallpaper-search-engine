@@ -8,6 +8,7 @@ import getWallPapers from './api/getWallPapers';
 import EmptyResult from './component/EmptyResult';
 import Title from './component/Title';
 import Search from './component/Search/Search';
+import { IGetWallPapersResponse, Order, Orientation } from './types';
 
 const Container = styled.div`
     position: relative;
@@ -28,14 +29,20 @@ const Header = styled.div`
 `;
 
 function App() {
-    const [data, setData] = useState({ total: 0, totalHits: 0, hits: [] });
+    const [data, setData] = useState<IGetWallPapersResponse>({
+        total: 0,
+        totalHits: 0,
+        hits: [],
+    });
     const [query, setQuery] = useState('');
-    const [order, setOrder] = useState('popular');
-    const [orientation, setOrientation] = useState('all');
+    const [order, setOrder] = useState<Order>('popular');
+    const [orientation, setOrientation] = useState<Orientation>('all');
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(20);
     const target = useRef(null);
     const numOfPages = data.totalHits ? Math.ceil(data.totalHits / perPage) : 0;
+
+    console.log(data);
 
     useEffect(() => {
         const fetch = async () => {
@@ -43,8 +50,8 @@ function App() {
                 q: query,
                 orientation: orientation,
                 order: order,
-                page: page,
-                per_page: perPage,
+                page: page.toString(),
+                per_page: perPage.toString(),
             });
             if (page === 1) {
                 setData(data);
@@ -58,7 +65,7 @@ function App() {
         fetch();
     }, [query, orientation, order, page, perPage]);
 
-    const callback = ([entries]) => {
+    const callback: IntersectionObserverCallback = ([entries]) => {
         if (entries.isIntersecting) {
             setPage((prev) => prev + 1);
         }
@@ -83,7 +90,6 @@ function App() {
                 <Header>
                     <Title />
                     <Search
-                        query={query}
                         setQuery={setQuery}
                         setOrder={setOrder}
                         setOrientation={setOrientation}

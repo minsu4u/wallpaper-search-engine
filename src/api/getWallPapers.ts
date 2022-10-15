@@ -1,11 +1,13 @@
 import request from './request';
+import { IParamObj } from '../types/index';
 
 const BASE_URL = 'https://pixabay.com/api';
 const defaultParam = {
-    key: process.env.REACT_APP_PIXABAY,
-}
-const getWallPapers = async (paramObj) => {
-    console.log(paramObj)
+    key: process.env.REACT_APP_PIXABAY!,
+    safesearch: 'true',
+};
+const getWallPapers = async (paramObj: IParamObj) => {
+    console.log(paramObj);
     const params = new URLSearchParams({
         ...defaultParam,
         ...paramObj,
